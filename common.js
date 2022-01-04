@@ -17,15 +17,18 @@ export const getMenuResponse = async (num) => {
 }
 // Used in handleSearch() and handleDisplay()
 export const displayBooks = (books) => {
-  books.forEach((book, index) => {
-    let authors = ''
-    if (book.authors === undefined) {
-      authors = 'author not available'
-    } else if (book.authors.length <= 2) {
-      authors = book.authors.join(' and ')
-    } else if (book.authors.length > 2) {
-      authors = book.authors.slice(0, -1).join(', ')+' and '+book.authors.slice(-1)
+  const getAuthors = (authors) => {
+    if (authors === undefined) {
+      return 'author not available'
+    } else if (authors.length <= 2) {
+      return authors.join(' and ')
+    } else if (authors.length > 2) {
+      return authors.slice(0, -1).join(', ')+' and '+authors.slice(-1)
     }
+  }
+  
+  books.forEach((book, index) => {
+    const authors = getAuthors(book.authors)
     const titleAuthor = `${index + 1}: ${book.title} by ${authors}`
     console.log(titleAuthor)
     if (!(book.publisher === undefined)) {
