@@ -14,7 +14,7 @@ jest.mock('fs', () => ({
 mockExistsSync.mockReturnValue(false).mockReturnValue(true)
 mockReadFile.mockReturnValue("[]")
 
-test('Check for file not existing or being empty', async () => {
+it('Should check for file not existing or being empty', async () => {
   expect(await getReadingList()).toBe(false)
   expect(await getReadingList()).toBe(false)
 })

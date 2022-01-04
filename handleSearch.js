@@ -23,6 +23,7 @@ export const getSearchTermFromUser = async () => {
   const answer = rawAnswer.toLowerCase()
   return answer
 }
+
 export const getQueryFromGoogle = async (searchTerm) => {
   try {
     const apiKey = 'AIzaSyCq4Y-BpzY0KobPAy-7JvHnQRzjNgSiAUY'
@@ -49,6 +50,7 @@ export const getQueryFromGoogle = async (searchTerm) => {
     console.log(err)
   }
 }
+
 export const saveBookQuestion = async (numBooks) => {
   console.log(`\nIf you want to select a book to save to your reading list, choose book from 1-${numBooks}.`)
   console.log(`To go back, choose ${numBooks + 1} `)
@@ -57,6 +59,7 @@ export const saveBookQuestion = async (numBooks) => {
   if (bookAnswer === numBooks + 1) {return false}
   return bookAnswer
 }
+
 export const addToList = (response, selection) => {
   const bookToAdd = response[selection - 1]
   if (fs.existsSync('readingList.json')) {
