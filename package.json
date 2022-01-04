@@ -2,15 +2,18 @@
   "name": "booksapi",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "booksapi.js",
   "scripts": {
     "v": "node -v",
-    "test": "jest"
+    "test": "jest --colors --config ./jest.config.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "babel-jest": "^27.4.5",
+    "core-js": "^3.20.2",
     "node": "17.3.0",
     "node-fetch": "^3.1.0"
   },
@@ -18,6 +21,8 @@
     "jest": "^27.4.5"
   },
   "jest": {
-    "transform": {}
+    "transform": {
+      "^.+\\.(js|jsx)?$": "babel-jest"
+    }
   }
 }
