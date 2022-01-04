@@ -15,6 +15,7 @@ export const getMenuResponse = async (num) => {
   rl.close()
   return answer
 }
+
 // Used in handleSearch() and handleDisplay()
 export const displayBooks = (books) => {
   const getAuthors = (authors) => {
@@ -26,7 +27,7 @@ export const displayBooks = (books) => {
       return authors.slice(0, -1).join(', ')+' and '+authors.slice(-1)
     }
   }
-  
+
   books.forEach((book, index) => {
     const authors = getAuthors(book.authors)
     const titleAuthor = `${index + 1}: ${book.title} by ${authors}`
