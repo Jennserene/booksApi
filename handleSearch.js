@@ -15,7 +15,11 @@ const handleSearch = async () => {
     // Initialize recieving input
     const rl = readline.createInterface({ input, output })
     console.log('\nSearching the Google Books API:')
-    const rawAnswer = await rl.question('Search for: ')
+    let rawAnswer = await rl.question('Search for: ')
+    // If/While rawAnswer is only whitespace, ask again
+    while (!rawAnswer.replace(/\s/g, '').length) {
+      rawAnswer = await rl.question('Search for: ')
+    }
     rl.close()
     const answer = rawAnswer.toLowerCase()
     return answer
