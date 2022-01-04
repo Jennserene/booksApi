@@ -16,18 +16,19 @@ export const getMenuResponse = async (num) => {
   return answer
 }
 
+// Used in displayBooks()
+export const getAuthors = (authors) => {
+  if (authors === undefined) {
+    return 'author not available'
+  } else if (authors.length <= 2) {
+    return authors.join(' and ')
+  } else if (authors.length > 2) {
+    return authors.slice(0, -1).join(', ')+', and '+authors.slice(-1)
+  }
+}
+
 // Used in handleSearch() and handleDisplay()
 export const displayBooks = (books) => {
-  const getAuthors = (authors) => {
-    if (authors === undefined) {
-      return 'author not available'
-    } else if (authors.length <= 2) {
-      return authors.join(' and ')
-    } else if (authors.length > 2) {
-      return authors.slice(0, -1).join(', ')+' and '+authors.slice(-1)
-    }
-  }
-
   books.forEach((book, index) => {
     const authors = getAuthors(book.authors)
     const titleAuthor = `${index + 1}: ${book.title} by ${authors}`

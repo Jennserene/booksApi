@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "booksapi.js",
+  "type": "module",
   "scripts": {
     "v": "node -v",
     "test": "jest --colors --config ./jest.config.js"
@@ -11,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
     "babel-jest": "^27.4.5",
     "core-js": "^3.20.2",

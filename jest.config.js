@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	clearMocks: true,
 	moduleFileExtensions: ['js', 'json'],
 	transform: {
@@ -10,12 +10,11 @@ module.exports = {
 	testURL: 'http://localhost/',
 	collectCoverage: true,
 	collectCoverageFrom: [
-		'src/**/*.{js}',
-		'!**/*.spec.po.js',
-		'!coverage/**',
-		'!**/*.config.js',
-		'!**/dist/**',
-	],
+    "**/*.{js}",
+    "!**/*.test.js",
+    "!coverage/**",
+    "!**/*.config.js"
+  ],
 	coverageReporters: ['text'],
 	coverageThreshold: {
 		global: {
