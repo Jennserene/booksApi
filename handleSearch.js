@@ -60,10 +60,8 @@ export const saveBookQuestion = async (numBooks) => {
   console.log(`\nIf you want to select a book to save to your reading list, choose book from 1-${numBooks}.`)
   console.log(`To go back, choose ${numBooks + 1} `)
   const bookAnswer = await getMenuResponse(numBooks + 1)
-  console.log(bookAnswer)
-  console.log(numBooks)
   // If user wants to go back
-  if (bookAnswer === numBooks + 1) {console.log('bookAnswer == numBooks + 1');return false}
+  if (bookAnswer === numBooks + 1) {return false}
   return bookAnswer
 }
 

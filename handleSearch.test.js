@@ -1,6 +1,6 @@
-import { getSearchTermFromUser, getQueryFromGoogle, saveBookQuestion } from './handleSearch.js'
+import { getSearchTermFromUser, getQueryFromGoogle, getBooks, saveBookQuestion, addToList } from './handleSearch.js'
 import fetch from 'node-fetch'
-import { getMenuResponse } from './common.js'
+import * as fs from 'fs'
 
 const mockQuestion = jest.fn()
 
@@ -102,7 +102,9 @@ const booksExpectedValue = [
     }
   ]
 
-// it('Should reformat raw books into readable objects')
+it('Should reformat raw books into readable objects', () => {
+  expect(getBooks(rawBookFetchReturn)).toStrictEqual(booksExpectedValue)
+})
 
 describe('When calling getQueryFromGoogle', () => {
   describe('And getQueryFromGoogle returns a list of books', () => {
@@ -152,6 +154,41 @@ describe('In saveBookQuestion', () => {
 
     it('Should return that number', async () => {
       expect(await saveBookQuestion(5)).toBe(2)
+    })
+  })
+})
+
+const mockExistsSync = jest.fn()
+const mockReadFile = jest.fn()
+const mockWriteFile = jest.fn()
+
+jest.mock('fs', () => ({
+  existsSync: () => mockExistsSync(),
+  readFile: (a, b) => mockReadFile(a, b),
+  writeFile: (a, b) => mockWriteFile(a, b)
+}))
+
+describe('In addToList', () => {
+  describe('When file does not exist', () => {
+    beforeEach(() => {
+      mockExistsSync.mockReturnValue(false)
+      addToList(booksExpectedValue, 1)
+    })
+    it('Should call writeFile with selected book', () => {
+      expect(mockWriteFile).toHaveBeenCalled()
+    })
+  })
+  describe('When file exists', () => {
+    let bookJSON
+    beforeEach(() => {
+      mockExistsSync.mockReturnValue(true)
+      mockReadFile.mockImplementation((filename, fn) => fn(false, "[]"))
+      bookJSON = JSON.stringify([booksExpectedValue[0]], null, 2)
+      mockWriteFile.mockReset()
+      addToList(booksExpectedValue, 1)
+    })
+    it('Should call writeFile with selected book and response from readFile', () => {
+      expect(mockWriteFile).toHaveBeenCalledWith("readingList.json", bookJSON)
     })
   })
 })
