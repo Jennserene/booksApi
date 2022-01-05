@@ -24,6 +24,24 @@ export const getSearchTermFromUser = async () => {
   return answer
 }
 
+export const getBooks = (resp) => {
+  const allBooks = []
+  resp.items.forEach((book) => {
+    // Some books don't have a volumeInfo.title, where is their title?! It has to exist somewhere
+    // Check if title exists then add
+    if ('title' in book.volumeInfo) {
+      allBooks.push({
+        title: book.volumeInfo.title,
+        authors: book.volumeInfo.authors,
+        publisher: book.volumeInfo.publisher,
+      })
+    }
+  })
+  // Get the first 5 books to meet requirement that only 5 books be displayed
+  const books = allBooks.slice(0, 5)
+  return books
+}
+
 export const getQueryFromGoogle = async (searchTerm) => {
   try {
     const apiKey = 'AIzaSyCq4Y-BpzY0KobPAy-7JvHnQRzjNgSiAUY'
@@ -31,20 +49,7 @@ export const getQueryFromGoogle = async (searchTerm) => {
     const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=10&key=${apiKey}`
     const rawResp = await fetch(url)
     const resp = await rawResp.json()
-    const allBooks = []
-    resp.items.forEach((book) => {
-      // Some books don't have a volumeInfo.title, where is their title?! It has to exist somewhere
-      // Check if title exists then add
-      if ('title' in book.volumeInfo) {
-        allBooks.push({
-          title: book.volumeInfo.title,
-          authors: book.volumeInfo.authors,
-          publisher: book.volumeInfo.publisher,
-        })
-      }
-    })
-    // Get the first 5 books to meet requirement that only 5 books be displayed
-    const books = allBooks.slice(0, 5)
+    const books = getBooks(resp)
     return books
   } catch (err) {
     console.log(err)
@@ -55,8 +60,10 @@ export const saveBookQuestion = async (numBooks) => {
   console.log(`\nIf you want to select a book to save to your reading list, choose book from 1-${numBooks}.`)
   console.log(`To go back, choose ${numBooks + 1} `)
   const bookAnswer = await getMenuResponse(numBooks + 1)
+  console.log(bookAnswer)
+  console.log(numBooks)
   // If user wants to go back
-  if (bookAnswer === numBooks + 1) {return false}
+  if (bookAnswer === numBooks + 1) {console.log('bookAnswer == numBooks + 1');return false}
   return bookAnswer
 }
 
